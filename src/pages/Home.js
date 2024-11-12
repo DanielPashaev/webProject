@@ -1,7 +1,8 @@
+// Home.js
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Home() {
+const Home = ({ listings = [] }) => {
   return (
     <div>
       <section className="hero">
@@ -14,40 +15,26 @@ function Home() {
           <Link to="/listings" className="btn">
             Browse Listings
           </Link>
-          <Link to="/CreateListing" className="btn create-listing-btn">
-            Create Listing
-          </Link>
         </div>
       </section>
-
       <div className="container">
-        <h2>How It Works</h2>
-        <div className="flex">
-          <div>
-            <h3>1. Donate</h3>
-            <p>
-              Create a listing of food items you wish to donate, and help reduce
-              waste.
-            </p>
-          </div>
-          <div>
-            <h3>2. Request</h3>
-            <p>
-              Search for available food near you and request items that you
-              need.
-            </p>
-          </div>
-          <div>
-            <h3>3. Pickup</h3>
-            <p>
-              Arrange for pickup or delivery of food and contribute to waste
-              reduction!
-            </p>
-          </div>
+        <h2>Available Items</h2>
+        <div className="listings-grid">
+          {listings.map((item) => (
+            <div key={item.id} className="listing-card">
+              <img
+                src={item.imageSrc}
+                alt={item.title}
+                className="listing-image"
+              />
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Home;

@@ -1,7 +1,8 @@
+// NavBar.js
 import React from "react";
 import { Link } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ isLoggedIn, onLogout }) {
   return (
     <nav>
       <ul className="container flex">
@@ -11,15 +12,27 @@ function NavBar() {
         <li>
           <Link to="/listings">Browse Listings</Link>
         </li>
-        <li>
-          <Link to="/CreateListing">Create Listing</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
+        {isLoggedIn ? (
+          <>
+            <li>
+              <Link to="/CreateListing">Add Item</Link>
+            </li>
+            <li>
+              <Link to="/" onClick={onLogout}>
+                Logout
+              </Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

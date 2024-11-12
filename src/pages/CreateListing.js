@@ -1,6 +1,8 @@
+// CreateListing.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CreateListing = () => {
+const CreateListing = ({ addListing }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -8,7 +10,10 @@ const CreateListing = () => {
     expirationDate: "",
     location: "",
     contactInfo: "",
+    imageSrc: "", // New field for image source
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,8 +22,17 @@ const CreateListing = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Listing Created:", formData);
-    // Here, you’d typically send `formData` to your backend API
+    addListing(formData); // Add new listing with image source
+    setFormData({
+      title: "",
+      description: "",
+      quantity: "",
+      expirationDate: "",
+      location: "",
+      contactInfo: "",
+      imageSrc: "",
+    });
+    navigate("/listings"); // Redirect to listings page after adding
   };
 
   return (
@@ -35,7 +49,6 @@ const CreateListing = () => {
             required
           />
         </label>
-
         <label>
           Description:
           <textarea
@@ -45,7 +58,6 @@ const CreateListing = () => {
             required
           />
         </label>
-
         <label>
           Quantity (e.g., kg, pieces):
           <input
@@ -56,7 +68,6 @@ const CreateListing = () => {
             required
           />
         </label>
-
         <label>
           Expiration Date:
           <input
@@ -67,7 +78,6 @@ const CreateListing = () => {
             required
           />
         </label>
-
         <label>
           Location:
           <input
@@ -78,7 +88,6 @@ const CreateListing = () => {
             required
           />
         </label>
-
         <label>
           Contact Information:
           <input
@@ -89,7 +98,17 @@ const CreateListing = () => {
             required
           />
         </label>
-
+        <label>
+          Image URL:
+          <input
+            type="text"
+            name="imageSrc"
+            value={formData.imageSrc}
+            onChange={handleChange}
+            placeholder="Enter image URL"
+            required
+          />
+        </label>
         <button type="submit">Create Listing</button>
       </form>
     </div>

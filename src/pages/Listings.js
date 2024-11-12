@@ -1,33 +1,29 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+// Listings.js
+import React from "react";
+import { Link } from "react-router-dom";
 
-function Listings() {
-  const [listings, setListings] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/listings")
-      .then((response) => setListings(response.data))
-      .catch((error) => console.error(error));
-  }, []);
-
+const Listings = ({ listings }) => {
   return (
     <div className="container">
-      <h2 className="text-2xl font-bold mb-4">Available Food Listings</h2>
+      <h2>Available Food Listings</h2>
       <div className="listings-grid">
         {listings.map((listing) => (
           <div key={listing.id} className="listing-card">
+            <img
+              src={listing.imageSrc}
+              alt={listing.title}
+              className="listing-image"
+            />
             <h3>{listing.title}</h3>
             <p>{listing.description}</p>
-            <p>
-              Available Until:{" "}
-              {new Date(listing.availableUntil).toLocaleString()}
-            </p>
+            <Link to={`/details/${listing.id}`} className="btn">
+              View Details
+            </Link>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default Listings;

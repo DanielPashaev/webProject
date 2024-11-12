@@ -1,42 +1,22 @@
-import React, { useState } from "react";
-import axios from "axios";
+// Login.js
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function Login({ setIsLoggedIn }) {
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8080/api/auth/login", { username, password })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error logging in:", error);
-      });
+    setIsLoggedIn(true); // Simulate login
+    navigate("/"); // Redirect to home page after login
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="border p-2 mb-4 w-full"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 mb-4 w-full"
-      />
-      <button type="submit" className="bg-green-600 text-white p-2 rounded">
-        Login
-      </button>
+    <form onSubmit={handleSubmit}>
+      <h2>Login</h2>
+      <input type="text" placeholder="Username" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
     </form>
   );
 }
